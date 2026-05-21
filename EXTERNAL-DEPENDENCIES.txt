@@ -1,0 +1,154 @@
+# External Dependencies for Odoo 18 - MyClient Hotel Project
+#
+# This file documents all third-party Odoo modules used in this project.
+# These modules are NOT tracked in git - they are cloned/downloaded separately.
+#
+# Last Updated: 2026-03-17
+
+---
+
+## OCA Modules (Community Modules)
+
+### OCA Social
+**Purpose:** WhatsApp integration, social media features
+**Repository:** https://github.com/OCA/social.git
+**Branch:** 18.0
+**Commit:** (update after cloning)
+**Install Location:** ~/addons/oca/social/
+**Modules Used:**
+- mail_gateway_whatsapp
+
+**Installation:**
+```bash
+cd ~/addons/oca
+git clone https://github.com/OCA/social.git
+cd social && git checkout 18.0
+```
+
+### OCA Account Financial Tools
+**Purpose:** Advanced accounting features
+**Repository:** https://github.com/OCA/account-financial-tools.git
+**Branch:** 18.0
+**Commit:** (update after cloning)
+**Install Location:** ~/addons/oca/account-financial-tools/
+
+**Installation:**
+```bash
+cd ~/addons/oca
+git clone https://github.com/OCA/account-financial-tools.git
+cd account-financial-tools && git checkout 18.0
+```
+
+### OCA Reporting Engine
+**Purpose:** Advanced reporting features
+**Repository:** https://github.com/OCA/reporting-engine.git
+**Branch:** 18.0
+**Commit:** (update after cloning)
+**Install Location:** ~/addons/oca/reporting-engine/
+
+**Installation:**
+```bash
+cd ~/addons/oca
+git clone https://github.com/OCA/reporting-engine.git
+cd reporting-engine && git checkout 18.0
+```
+
+---
+
+## Cybrosys Modules (Vendored)
+
+### Base Accounting Kit
+**Purpose:** Advanced accounting features for Odoo
+**Source:** https://github.com/CybroOdoo/CybroAddons (branch 18.0)
+**Download Date:** 2026-03-17
+**Install Location:** ~/addons/cybrosys/base_accounting_kit/
+**Modules Used:**
+- base_accounting_kit
+- base_account_budget (dependency)
+
+**Installation:**
+```bash
+# Download from GitHub and extract
+# Or copy from: /opt/odoo18/odoo18-custom-addons/base_accounting_kit
+cp -r /opt/odoo18/odoo18-custom-addons/base_accounting_kit ~/addons/cybrosys/
+cp -r /opt/odoo18/odoo18-custom-addons/base_account_budget ~/addons/cybrosys/
+```
+
+---
+
+## Python Dependencies
+
+Required Python packages for Cybrosys modules:
+```bash
+openpyxl>=3.0.0
+ofxparse>=0.21
+qifparse>=0.2
+```
+
+These are already in `requirements-custom.txt` in the project root.
+
+---
+
+## Update Policy
+
+### How to Update OCA Modules
+
+1. **Backup first:**
+   ```bash
+   cd ~/addons/oca/social
+   git stash
+   ```
+
+2. **Pull latest changes:**
+   ```bash
+   git pull origin 18.0
+   ```
+
+3. **Test on test environment first**
+
+4. **Document new commit hash here**
+
+5. **Update production only after testing**
+
+### Version Tracking
+
+For each module, track the working commit:
+```bash
+cd ~/addons/oca/social
+git log -1 --oneline
+# Output: a1b2c3d4... Latest working commit
+```
+
+---
+
+## Notes
+
+- **Never commit these modules to git** - they're external dependencies
+- **Always use specific branches (18.0)** - never master
+- **Test updates on test environment first**
+- **Document breaking changes here**
+- **Keep requirements-custom.txt updated**
+
+---
+
+## Troubleshooting
+
+### Module not showing in Odoo
+1. Check addons path in docker-compose.yml
+2. Verify directory exists: `ls ~/addons/oca/`
+3. Check for __manifest__.py: `find ~/addons/oca -name "__manifest__.py"`
+4. Restart Odoo: `sudo docker-compose restart`
+
+### Git pull fails
+```bash
+cd ~/addons/oca/social
+git fetch --all
+git reset --hard origin/18.0
+```
+
+### Need to rollback
+```bash
+cd ~/addons/oca/social
+git reflog  # Find old commit
+git checkout <old-commit-hash>
+```

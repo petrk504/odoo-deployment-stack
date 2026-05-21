@@ -1,0 +1,4 @@
+# Dependencies for Base Accounting Kit
+openpyxl>=3.0.0
+ofxparse>=0.21
+qifparse>=0.2
